@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-26T02:25:23.102Z",
-  "updatedAt": "2025-06-26T02:43:10.192Z",
+  "updatedAt": "2025-06-26T03:17:48.888Z",
   "id": "Sk7LnpTphqEV7DgS",
   "name": "Github-Backup",
   "active": true,
@@ -38,7 +38,7 @@
       "typeVersion": 1,
       "credentials": {
         "n8nApi": {
-          "id": "CgUxxh7VxS6h1k6Q",
+          "id": "kIpKA2QPx9yYPndg",
           "name": "n8n account"
         }
       }
@@ -93,7 +93,7 @@
       "alwaysOutputData": true,
       "credentials": {
         "githubApi": {
-          "id": "7w2Lk3yAm6iEiv4K",
+          "id": "UyN8lBKXxbRw1Syv",
           "name": "GitHub account"
         }
       }
@@ -129,7 +129,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "7w2Lk3yAm6iEiv4K",
+          "id": "UyN8lBKXxbRw1Syv",
           "name": "GitHub account"
         }
       }
@@ -164,7 +164,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "7w2Lk3yAm6iEiv4K",
+          "id": "UyN8lBKXxbRw1Syv",
           "name": "GitHub account"
         }
       }
@@ -408,7 +408,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "a7c54c48-08eb-43a7-ab10-a90aa27071ed",
+  "versionId": "10bbf310-b12c-4cfc-8c51-d8051e8ccb57",
   "triggerCount": 1,
   "tags": []
 }
