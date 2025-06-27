@@ -1,0 +1,669 @@
+{
+  "createdAt": "2025-06-26T03:21:36.716Z",
+  "updatedAt": "2025-06-26T05:19:31.834Z",
+  "id": "MZWTjgF5qjs7jEN6",
+  "name": "Crypto-News-GPT",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9128e9e7-d1b8-4e89-8422-849b8dd519d8",
+              "name": "query",
+              "type": "string",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c3f988d8-9b42-4969-99e7-0e5aea2f86ce",
+      "name": "Set Query",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -3240,
+        1400
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "url": "https://cointelegraph.com/rss",
+        "options": {}
+      },
+      "id": "adb3932f-8bc3-4b18-af43-d2409ab56658",
+      "name": "RSS Cointelegraph",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        560
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://bitcoinmagazine.com/.rss/full/",
+        "options": {}
+      },
+      "id": "43c2cffa-68dd-4b73-b9fa-c972becd1679",
+      "name": "RSS Bitcoinmagazine",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        720
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "options": {}
+      },
+      "id": "305dd8e6-7dbc-4b2b-8b0c-d8ff6ab6242e",
+      "name": "RSS Coindesk",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        880
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://bitcoinist.com/feed/",
+        "options": {}
+      },
+      "id": "4313bb29-f52a-4085-8dda-656bd38fdaaa",
+      "name": "RSS Bitcoinist",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        1040
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://www.newsbtc.com/feed/",
+        "options": {}
+      },
+      "id": "c750cfc4-447d-4348-b83c-eb72827c23d2",
+      "name": "RSS Newsbtc",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        1200
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://cryptopotato.com/feed/",
+        "options": {}
+      },
+      "id": "35dace6b-eb45-4e50-a0af-f490b2ae778b",
+      "name": "RSS Cryptopotato",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        1560
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://99bitcoins.com/feed/",
+        "options": {}
+      },
+      "id": "9a3231d5-1746-435d-9585-8d764cc67989",
+      "name": "RSS 99bitcoins",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        1740
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://cryptobriefing.com/feed/",
+        "options": {}
+      },
+      "id": "a1f01f8f-8b6b-4dd5-9c6c-ad19e99cfd15",
+      "name": "RSS Cryptobriefing",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        1920
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://crypto.news/feed/",
+        "options": {}
+      },
+      "id": "d078c674-b486-470d-a82f-ef182c63b88f",
+      "name": "RSS Crypto.news",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -2620,
+        2080
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "id": "3f1e01c2-8514-4170-9b6f-42a3ac4c8d52",
+      "name": "Merge All Articles",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -1940,
+        1240
+      ],
+      "typeVersion": 3.1
+    },
+    {
+      "parameters": {
+        "jsCode": "const term = $node[\"Set Query\"].json.query.toLowerCase();\nreturn items.filter(item => {\n  const j            = item.json;\n  const title        = (j.title || \"\").toLowerCase();\n  const snippet      = (j.contentSnippet || j.description || \"\").toLowerCase();\n  const fullContent  = (j.content || \"\").toLowerCase();\n  return title.includes(term)\n      || snippet.includes(term)\n      || fullContent.includes(term);\n});"
+      },
+      "id": "136df281-21c4-4c10-a7ff-12dcc9cf1bff",
+      "name": "Filter by Query",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -1700,
+        1380
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "const q   = $node[\"Set Query\"].json.query;\nconst list = items\n  .map(i => `- ${i.json.title} (${i.json.link})`)\n  .join(\"\\n\");\nconst prompt = `\nYou are a crypto-industry news analyst.\nSummarize current news and market sentiment for **${q}** based on these articles:\n${list}\n\nAnswer in 3 parts:\n1. Summary of News\n2. Market Sentiment\n3. Links to reference news articles\n`;\nreturn [{ json: { prompt } }];"
+      },
+      "id": "90762730-183f-405a-a76f-0507baa66b81",
+      "name": "Build Prompt",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -1380,
+        1380
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $node[\"Build Prompt\"].json.prompt }}"
+            },
+            {
+              "content": "You are a crypto‐industry news analyst. Summarize sentiment clearly and concisely.",
+              "role": "assistant"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b031be13-eef2-46bc-9409-2b80c07459b3",
+      "name": "Summarize News & Sentiment (GPT-4o)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -880,
+        1380
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "565fb705-ac83-4a96-9343-2e29e348cc4f",
+              "name": "summary",
+              "type": "string",
+              "value": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8b81e563-7cc2-4a7d-8a8e-bcd2808e1c82",
+      "name": "Prepare Telegram Message",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -460,
+        1380
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "##  Extract Keyword \nThis AI agent parses the user input and returns a single-word keyword to help match relevant news articles.",
+        "height": 460,
+        "width": 600,
+        "color": 6
+      },
+      "id": "f1585d22-884e-4bab-b2f4-16dd63ca0c77",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3900,
+        1260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## News Aggregators\nPulls articles from major crypto news sources. You can add more RSS feeds here to expand coverage.",
+        "height": 1980,
+        "width": 460,
+        "color": 5
+      },
+      "id": "311d7a34-93a4-4ee9-a560-9d3330ef30ff",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2780,
+        360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Merge & Filter News\nCombines all RSS articles and filters them using the extracted keyword to match only relevant results.",
+        "height": 760,
+        "width": 480,
+        "color": 2
+      },
+      "id": "bcecf4e4-1210-400a-8799-85ee13cfc687",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2020,
+        1040
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Prepare AI Prompt\nConstructs the input prompt for GPT-4o with a list of filtered articles. Output includes summary, sentiment, and article links.",
+        "height": 360,
+        "width": 260,
+        "color": 7
+      },
+      "id": "6e9c1a78-fddd-44e5-a901-591f05aa95c6",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1460,
+        1200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Summarize News & Sentiment (GPT-4o)\nUses OpenAI GPT-4o to generate a concise summary of the news, analyze market sentiment, and return formatted results.\n\n",
+        "height": 440,
+        "width": 340,
+        "color": 3
+      },
+      "id": "1415b959-8704-4a33-ab2d-59214578d1b4",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1140,
+        1160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Format for Telegram\n\nExtracts the AI summary and prepares it for Telegram delivery. Change the variable if you want to include other data.\n\n\n",
+        "height": 460,
+        "color": 6
+      },
+      "id": "eb473699-d078-4e3a-b5ce-729c9c032eb2",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -740,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "a6040810-6c9f-41b8-826e-9320ead672a0",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        -120,
+        1380
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "## Webhook Trigger\nNode: Webhook\nAccepts **incoming HTTP POST requests**.\nExpected body format:\n\njson\n{ \"message\": \"<symbol>\" }\n\nThis kicks off the **full news + sentiment analysis process** for a given crypto asset.",
+        "height": 480,
+        "color": 4
+      },
+      "id": "a45e8aaa-2594-418d-bdc3-7c7cfbbb66e3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4280,
+        1100
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Return Results to Caller\nNode: Respond to Webhook\n**Sends the final formatted message** back to the parent workflow that triggered the call.",
+        "height": 480,
+        "color": 4
+      },
+      "id": "63c96b22-e653-42ab-a9e2-035f62062cea",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -400,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# 📰 Binance SM News and Sentiment Analyst Webhook Tool – Documentation\n\nA sentiment intelligence sub-agent that aggregates crypto news from top-tier RSS feeds, filters it based on a given token, and generates a market sentiment summary + headline list formatted for Telegram.\n\n---\n\n## 🎯 Purpose\n\nThis tool is responsible for:\n\n* Accepting a webhook request with a token symbol (e.g., `DOGE`, `SOL`)\n* Aggregating recent articles from 9+ major crypto news feeds\n* Filtering for articles relevant to the symbol\n* Summarizing the sentiment and key headlines using GPT-4o\n* Returning a Telegram-friendly formatted response to the caller\n\n---\n\n## 🛠️ Architecture & Key Components\n\n| Component                          | Role                                                           |\n| ---------------------------------- | -------------------------------------------------------------- |\n| 🔗 `Webhook`                       | Triggered externally with `{ message: \"BTC\" }`                 |\n| 🧠 `Crypto News & Sentiment Agent` | Uses GPT to extract the correct crypto keyword                 |\n| 🔄 RSS Feed Readers                | Pull from Cointelegraph, Coindesk, NewsBTC, Bitcoinist, etc.   |\n| 📦 `Merge All Articles`            | Combines articles into one stream                              |\n| 🧹 `Filter by Query`               | Keeps only the news relevant to the requested token            |\n| 📝 `Build Prompt`                  | Builds natural-language prompt to send to GPT                  |\n| 🧠 `Summarize News & Sentiment`    | GPT-4o summarizes the filtered articles with sentiment scoring |\n| 🧾 `Prepare Telegram Message`      | Formats the final summary in clean, Telegram-readable style    |\n| 📤 `Respond to Webhook`            | Returns the message to the triggering parent workflow          |\n\n---\n\n## 📥 Webhook Input\n\n> Expects a simple HTTP POST to the webhook endpoint:\n\n```json\n{\n  \"message\": \"ETH\"\n}\n```\n\nThis triggers a full pipeline execution, resulting in a text summary like:\n\n---\n\n## 📤 Sample Output Format\n\n```\n📣 ETH Sentiment: Neutral\n\n• BlackRock’s tokenized fund expands to Ethereum mainnet (CoinDesk)  \n• Ethereum fees remain high, analysts call for L2 migration (NewsBTC)  \n• Vitalik warns about centralized risks in staking (Cointelegraph)\n```\n\n---\n\n## 🔍 Use Cases\n\n| Scenario                                   | Outcome                                              |\n| ------------------------------------------ | ---------------------------------------------------- |\n| Sentiment summary for BTC                  | Fetches 8–12 filtered headlines, extracts tone       |\n| Daily news pulse for SOL                   | Shows project-related news with brief sentiment flag |\n| Enhances technical analysis interpretation | Adds macro/emotional context to trend setups         |\n| Telegram bot asks for XRP sentiment        | Sends full response back to user instantly           |\n\n---\n\n## 📚 How to Install\n\n### 1. Import & Activate\n\n1. Load the `.json` into your n8n instance\n2. Enable the webhook\n3. Link to parent agent (`Financial Analyst`, `Quant Agent`)\n\n### 2. Set Credentials\n\n* Requires a working **OpenAI API Key** (for GPT-4o)\n* No authentication required for RSS sources\n\n### 3. Connect to Caller\n\nAny external workflow (like your `Quant AI Agent`) can call this by:\n\n* Using HTTP Request Node\n* POSTing to this webhook with `{ message: \"BTC\" }` in the body\n\n---\n\n## 🧾 Licensing & Support\n\n🔗 **Don Jayamaha – LinkedIn**\n[http://linkedin.com/in/donjayamahajr](http://linkedin.com/in/donjayamahajr)\n\n© 2025 Treasurium Capital Limited Company. All rights reserved.\nThis system—including workflow architecture, prompt design, and logic structure—is protected under U.S. copyright law. Unauthorized resale or reproduction is prohibited.\n\n",
+        "height": 2360,
+        "width": 1340
+      },
+      "id": "6c044d59-a625-4e3b-9169-4cd951dfedcc",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -3760,
+        1560
+      ],
+      "id": "16f8680b-92a1-4638-8e19-445b8768dcf7",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "QuCCOEwA7ZKqjmZP",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -1160,
+        1380
+      ],
+      "id": "8569b00d-a76b-4ee6-8e39-b3e473eb0d9d",
+      "name": "AI Agent"
+    }
+  ],
+  "connections": {
+    "Set Query": {
+      "main": [
+        [
+          {
+            "node": "RSS Cointelegraph",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Bitcoinmagazine",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Coindesk",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Bitcoinist",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Newsbtc",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Cryptopotato",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS 99bitcoins",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Cryptobriefing",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Crypto.news",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Newsbtc": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Coindesk": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "RSS 99bitcoins": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "RSS Bitcoinist": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Filter by Query": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Crypto.news": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 9
+          }
+        ]
+      ]
+    },
+    "RSS Cryptopotato": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "RSS Cointelegraph": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge All Articles": {
+      "main": [
+        [
+          {
+            "node": "Filter by Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Cryptobriefing": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 8
+          }
+        ]
+      ]
+    },
+    "RSS Bitcoinmagazine": {
+      "main": [
+        [
+          {
+            "node": "Merge All Articles",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prepare Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize News & Sentiment (GPT-4o)": {
+      "main": [
+        [
+          {
+            "node": "Prepare Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Summarize News & Sentiment (GPT-4o)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "f060b23e-9b02-4c88-a8ef-597f83c01f0a",
+  "triggerCount": 0,
+  "tags": []
+}
